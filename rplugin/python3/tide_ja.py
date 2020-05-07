@@ -3,6 +3,10 @@ import datetime
 
 import lxml.html
 
+
+def plus(a, b):
+    return a + b
+
 class Scraper:
     def __init__(self):
         pass
