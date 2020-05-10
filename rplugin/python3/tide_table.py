@@ -4,9 +4,15 @@ class TideTable:
         self._date = date
 
     def _key(self):
-        return "20 1 1KW"
+        year = self._date[0]
+        month = format(self._date[1], ' >2')
+        day = format(self._date[2], ' >2')
+        return "{}{}{}{}".format(year, month, day)
+    def _path(self):
+        return "db/{}/{}.txt".format(self._date[0], self._place)
 
     def _find_row(self, key):
+        self.
         # TODO: implement
         return "65 47 39 44 61 8611313715315915414212711210310110812113514614914212710620 1 1KW 9 3159194914999999999999999 2 7 39144210199999999999999"
 
