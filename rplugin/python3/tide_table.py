@@ -7,14 +7,20 @@ class TideTable:
         year = self._date[0]
         month = format(self._date[1], ' >2')
         day = format(self._date[2], ' >2')
-        return "{}{}{}{}".format(year, month, day)
+        return "{}{}{}{}".format(year, month, day, self._place)
+
     def _path(self):
         return "db/{}/{}.txt".format(self._date[0], self._place)
 
     def _find_row(self, key):
-        self.
-        # TODO: implement
-        return "65 47 39 44 61 8611313715315915414212711210310110812113514614914212710620 1 1KW 9 3159194914999999999999999 2 7 39144210199999999999999"
+        with open(self._path()) as f:
+            line = f.readline()
+            while line:
+                if key in line:
+                    return line
+                line.readline()
+        raise Exception('invalid key or table')
+        # "65 47 39 44 61 8611313715315915414212711210310110812113514614914212710620 1 1KW 9 3159194914999999999999999 2 7 39144210199999999999999"
 
     def tide_dict(self):
         key = self._key()
