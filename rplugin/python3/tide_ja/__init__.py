@@ -1,6 +1,6 @@
 import pynvim
 from datetime import datetime
-from tide_table import tide_dict
+from .tide_table import tide_dict
 
 @pynvim.plugin
 class TestPlugin(object):
@@ -12,12 +12,11 @@ class TestPlugin(object):
         self.nvim = nvim
 
     def format_tide(self, place, date, tide):
-        output = []
+        output = ["[tide-ja.vim]"]
         output += [self.PLACE_KEYS[place]]
         output += ["20{}-{}-{}".format(date[0], date[1], date[2])]
-        highlows = tide.highs + tide.lows
-        sorted(highlows, key=lambda e: int(e[0][0]))
-        for e in highlows:
+        highlows = tide["highs"] + tide["lows"]
+        for e in sorted(highlows, key=lambda e: int(e[0][0])):
             output += ["{}:{} {}cm".format(e[0][0], e[0][1], e[1])]
         return output
 

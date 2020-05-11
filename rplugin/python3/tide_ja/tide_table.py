@@ -14,11 +14,9 @@ class TideTable:
 
     def _find_row(self, key):
         with open(self._path()) as f:
-            line = f.readline()
-            while line:
+            for line in f:
                 if key in line:
                     return line
-                line.readline()
         raise Exception('invalid key or table')
 
     def tide_dict(self):
