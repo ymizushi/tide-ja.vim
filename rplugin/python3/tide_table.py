@@ -20,22 +20,26 @@ class TideTable:
                     return line
                 line.readline()
         raise Exception('invalid key or table')
-        # "65 47 39 44 61 8611313715315915414212711210310110812113514614914212710620 1 1KW 9 3159194914999999999999999 2 7 39144210199999999999999"
 
     def tide_dict(self):
         key = self._key()
         row = self._find_row(key)
-        # TODO: implement
+        levels = [int(row[i: i+3].replace(' ', '')) for i in range(0, 72, 3)]
+        highs = [(
+                    (
+                        int(row[i: i+2].replace(' ', '')),
+                        int(row[i+2: i+4].replace(' ', ''))
+                    ),
+                    int(row[i+4: i+7].replace(' ', ''))
+                    ) for i in range(80, 108, 7) if row[i:i+7] != '9999999']
+        lows = [((
+                        int(row[i: i+2].replace(' ', '')),
+                        int(row[i+2: i+4].replace(' ', ''))
+                    ), int(row[i+4: i+7].replace(' ', ''))) for i in range(108, 136, 7) if row[i:i+7] != '9999999']
         return dict(
-            levels=[65,47,39,44,61,86,113,137,153,159,154,142,127,112,103,101,108,121,135,146,149,142,127,106],
-            high=[
-                ((9,3), 159),
-                ((19,49), 149),
-            ],
-            low=[
-                ((2,7), 39),
-                ((14,42), 101),
-            ]
+            levels=levels,
+            highs=highs,
+            lows=lows,
         )
 def tide_dict(place, date):
     table = TideTable(place, date)
