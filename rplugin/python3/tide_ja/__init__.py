@@ -1,6 +1,6 @@
 import pynvim
 from datetime import datetime
-from .tide_table import tide_dict
+from .tide_table import tide_dict, InvalidKeyException
 from .constants import PLACE_KEYS
 
 @pynvim.plugin
@@ -26,15 +26,24 @@ class TestPlugin(object):
             today.month,
             today.day
         )
-        if args == 3:
-            place = args[1]
-            date = tuple(args[2].split('-'))
-        elif range == 2:
-            place = args[1]
+        if len(args) == 2:
+            place = args[0]
+            date = tuple([int(s) for s in args[1].split('-')])
+        elif len(args) == 1:
+            place = args[0]
+        self.nvim.err_write("target:{}\n".format(date))
 
-        tide = tide_dict(place, date)
-        tide_line = self.format_tide(place, date, tide)
-        self.nvim.command('vsplit')
-        self.nvim.command('e [tide-ja.vim]')
-        self.nvim.command('set buftype=nowrite')
-        self.nvim.current.buffer.append(tide_line)
+        try:
+            tide = tide_dict(place, date)
+        except InvalidKeyException:
+            self.nvim.err_write("target month or day is invalid\n")
+        except FileNotFoundError:
+            self.nvim.err_write("Place key or target year is invalid\n")
+        else:
+            tide_line = self.format_tide(place, date, tide)
+            self.nvim.command('vsplit')
+            self.nvim.command('e [tide-ja.vim]')
+            self.nvim.command('set buftype=nowrite')
+            self.nvim.current.buffer.append(tide_line, -2)
+
+
