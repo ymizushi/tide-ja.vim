@@ -31,14 +31,13 @@ class TestPlugin(object):
             date = tuple([int(s) for s in args[1].split('-')])
         elif len(args) == 1:
             place = args[0]
-        self.nvim.err_write("target:{}\n".format(date))
 
         try:
             tide = tide_dict(place, date)
         except InvalidKeyException:
             self.nvim.err_write("target month or day is invalid\n")
         except FileNotFoundError:
-            self.nvim.err_write("Place key or target year is invalid\n")
+            self.nvim.err_write("place key or target year is invalid\n")
         else:
             tide_line = self.format_tide(place, date, tide)
             self.nvim.command('vsplit')
