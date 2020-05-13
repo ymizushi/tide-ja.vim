@@ -47,6 +47,10 @@ ex.
 :TideJa KW 20-5-11
 ```
 
+# Screenshot
+
+[![screenshot](https://github.com/ymizushi/tide-ja.vim/blob/master/screenshot.png)](https://github.com/ymizushi/tide-ja.vim/blob/master/screenshot.png)
+
 # DEVELOPMENT
 
 ## local install
