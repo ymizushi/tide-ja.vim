@@ -27,7 +27,7 @@ class TideTable:
         return "{}{}{}{}".format(year, month, day, self._place)
 
     def _path(self):
-        return "rplugin/python3/db/{}/{}.txt".format(self._date[0], self._place)
+        return "./rplugin/python3/db/{}/{}.txt".format(self._date[0], self._place)
 
     def _find_row(self, key):
         with open(self._path()) as f:
